@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: api-gateway
+
+server:
+  port: 2006
+
+zuul:
+  routes:
+    api-a:
+      path: /api-a/**
+      serviceId: feign-consumer
+      sensitiveHeaders: Cookie,Set-Cookie,Authorization
+      strip-prefix: true
+
+    feign-consumer-hello:
+      path: /feign-consumer/hello/**
+      serviceId: feign-consumer-hello
+    feign-consumer:
+        path: /feign-consumer/**
+        serviceId: feign-consumer
+    local:
+      path: /local/**
+      url: forward:/local
+
+
+#  ignored-patterns: /**/hello/**
+#  prefix: /myapi
+  add-host-header: true
+#
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/

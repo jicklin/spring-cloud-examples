@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: marry_route
+          uri: http://httpbin.org
+          predicates:
+            - Path=/get
+            #- After=2022-01-01T01:01:01+08:00[Asia/Shanghai]
+            #- Before=2022-01-01T01:01:01+08:00[Asia/Shanghai]
+            # - Between=2024-01-01T01:01:01+08:00[Asia/Shanghai],2023-11-01T01:01:01+08:00[Asia/Shanghai]
+      discovery:
+        locator:
+          enabled: true # 开启自动代码 可以直接访问serviceId（大写）
+  application:
+    name: gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka
+
+server:
+  port: 4004
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
